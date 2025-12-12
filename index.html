@@ -605,34 +605,31 @@
     </style>
   </head>
   <body>
-    <header class="main-header">
-      <nav class="navbar-container">
-        <div class="">
-          <a href="#">
-            <img
-              src="images/logo.svg"
-              alt="Logo Grand Hotel"
-              class="logo-image"
-            />
-          </a>
-        </div>
+ <header class="main-header">
+  <nav class="navbar-container">
+    <div class="">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Logo Grand Hotel" class="logo-image" />
+      </a>
+    </div>
 
-        <ul class="nav-menu">
-          <li><a href="#" class="nav-link active">Trang Chủ</a></li>
-          <li><a href="#" class="nav-link">Phòng</a></li>
-          <li><a href="#" class="nav-link">Dịch vụ</a></li>
-          <li><a href="#" class="nav-link">Tin tức</a></li>
-          <li><a href="#" class="nav-link">Liên hệ</a></li>
-        </ul>
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
+      <li><a href="phong.html" class="nav-link">Phòng</a></li>
+      <li><a href="dichvu.html" class="nav-link">Dịch vụ</a></li>
+      <li><a href="tintuc.html" class="nav-link">Tin tức</a></li>
+      <li><a href="lienhe.html" class="nav-link">Liên hệ</a></li>
+    </ul>
 
-        <div class="nav-right">
-          <a href="#" class="btn-book">Đặt phòng ngay</a>
-          <a href="templates/login.html" class="nav-icon">
-            <i class="fa-regular fa-user"></i>
-          </a>
-        </div>
-      </nav>
-    </header>
+    <div class="nav-right">
+      <a href="phong.html" class="btn-book">Đặt phòng ngay</a>
+      <a href="templates/login.html" class="nav-icon">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
 
     <section class="hero-section">
       <div class="hero-overlay">
@@ -831,5 +828,78 @@
         </div>
       </div>
     </footer>
+ <!-- Container popup -->
+  <div id="livestream-root"></div>
+
+  <!-- React + ReactDOM + Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Script React popup -->
+  <script type="text/babel">
+    const { useState } = React;
+
+    function MiniLivestream() {
+      const [isOpen, setIsOpen] = useState(false);
+
+      // URL video YouTube nhúng, autoplay + mute để chạy được ngay
+      const videoUrl = "https://www.youtube.com/embed/cmfeMfdYRFs?autoplay=1&mute=1";
+
+      return (
+        <>
+          {/* Nút mở popup */}
+          {!isOpen && (
+            <button
+              onClick={() => setIsOpen(true)}
+              className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg"
+            >
+              Xem Livestream
+            </button>
+          )}
+
+          {/* Popup mini */}
+          {isOpen && (
+            <div className="fixed bottom-4 right-4 z-50 w-[360px] h-[202px] bg-white rounded shadow-lg overflow-hidden flex flex-col">
+              
+              {/* Header popup */}
+              <div className="flex justify-between items-center bg-red-600 text-white px-2 py-1">
+                <span className="text-xs font-bold uppercase">LIVE</span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-white font-bold text-lg leading-none"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Video iframe */}
+              <div className="flex-1">
+                <iframe
+                  src={videoUrl}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  allow="autoplay"
+                  title="Livestream"
+                ></iframe>
+              </div>
+
+              {/* Footer popup */}
+              <div
+                className="bg-gray-100 text-xs px-2 py-1 text-gray-700 text-center cursor-pointer"
+                onClick={() => window.location.href = "videohub.html"}
+              >
+                Xem tất cả Livestream
+              </div>
+            </div>
+          )}
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("livestream-root")).render(<MiniLivestream />);
+  </script>
   </body>
 </html>
